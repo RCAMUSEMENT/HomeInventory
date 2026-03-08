@@ -9,8 +9,8 @@
  * All methods include try-catch blocks to ensure robust error handling and provide feedback on success or failure of operations.
  */
 
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
 /**
  * Part 1: Home Class with Required Attributes and Methods
@@ -81,13 +81,14 @@ class Home {
  * Part 2: Main HomeInventory Class
  */
 public class HomeInventory {
-    private static final ArrayList<Home> inventory = new ArrayList<>();
+    private static ArrayList<Home> inventory = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        try (Scanner scanner = new Scanner(System.in)) {
+        try {
             // 1. Call Home class with parameterized constructor
             System.out.println("--- Initializing Home ---");
-            Home initialHome = new Home(2500, "851 Coconut St", "Boston", "MA", 12108, "The Boston", "Is for sale");
+            Home initialHome = new Home(2500, "851 Coconut St", "Boston", "MA", 02108, "The Boston", "Is for sale");
             inventory.add(initialHome);
 
             // 2. Call list method (Loop through array and print)
@@ -118,14 +119,16 @@ public class HomeInventory {
             }
 
             // 8. File Print Logic
-            handleFileOutput(scanner);
+            handleFileOutput();
 
             // Logic to keep program open or close
-            promptToStayOpen(scanner);
+            promptToStayOpen();
 
         } catch (Exception e) {
             // Requirement: Include try..catch and print to console
             System.out.println("A main application error has occurred: " + e.getMessage());
+        } finally {
+            scanner.close();
         }
     }
 
@@ -182,7 +185,7 @@ public class HomeInventory {
     }
 
     // Method to handle file output logic
-    private static void handleFileOutput(Scanner scanner) {
+    private static void handleFileOutput() {
         System.out.print("\nDo you want to print the information to a file? (Y/N): ");
         String response = scanner.nextLine().trim().toUpperCase();
 
@@ -210,7 +213,7 @@ public class HomeInventory {
         }
     }
 
-    private static void promptToStayOpen(Scanner scanner) {
+    private static void promptToStayOpen() {
         System.out.print("\nWould you like to keep the program open? (Y/N): ");
         String stay = scanner.nextLine().trim().toUpperCase();
         if (stay.equals("Y")) {
