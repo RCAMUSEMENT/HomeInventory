@@ -39,12 +39,22 @@ public class HomeInventory {
                     }
                     case "2" -> {
                         System.out.println("\n--- Removing Home ---");
-                        System.out.print("Enter index to remove: ");
-                        try {
-                            int idx = Integer.parseInt(scanner.nextLine());
-                            System.out.println(removeHome(idx));
-                        } catch (NumberFormatException e) {
-                            System.out.println("Invalid input. Please enter a number.");
+                        if (inventory.isEmpty()) {
+                            System.out.println("Inventory is empty. Nothing to remove.");
+                        } else {
+                            System.out.print("Enter index to remove: ");
+                            try {
+                                int idx = Integer.parseInt(scanner.nextLine());
+                                // CONFIRMATION FAILSAFE
+                                System.out.print("Are you sure you want to remove home [" + idx + "]? (Y/N): ");
+                                if (scanner.nextLine().trim().equalsIgnoreCase("Y")) {
+                                    System.out.println(removeHome(idx));
+                                } else {
+                                    System.out.println("Removal cancelled.");
+                                }
+                            } catch (NumberFormatException e) {
+                                System.out.println("Invalid input. Please enter a number.");
+                            }
                         }
                     }
                     case "3" -> listInventory();
@@ -72,25 +82,45 @@ public class HomeInventory {
     }
 
     private static Home promptForHome(Scanner scanner) {
-        try {
-            System.out.print("Enter square feet: ");
-            int sqft = Integer.parseInt(scanner.nextLine());
-            System.out.print("Enter address: ");
-            String addr = scanner.nextLine();
-            System.out.print("Enter city: ");
-            String city = scanner.nextLine();
-            System.out.print("Enter state: ");
-            String state = scanner.nextLine();
-            System.out.print("Enter zip code: ");
-            int zip = Integer.parseInt(scanner.nextLine());
-            System.out.print("Enter model name: ");
-            String model = scanner.nextLine();
-            String status = promptForStatus(scanner);
-            return new Home(sqft, addr, city, state, zip, model, status);
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid input provided. Creating a placeholder home.");
-            return new Home(0, "Invalid", "Invalid", "XX", 0, "ErrorModel", "available");
+        int sqft = -1;
+        while (sqft < 0) {
+            try {
+                System.out.print("Enter square feet: ");
+                sqft = Integer.parseInt(scanner.nextLine());
+                if (sqft < 0) System.out.println("Square feet cannot be negative.");
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number for square feet.");
+            }
         }
+
+        System.out.print("Enter address: ");
+        String addr = scanner.nextLine();
+        System.out.print("Enter city: ");
+        String city = scanner.nextLine();
+
+        String state = "";
+        while (state.length() != 2) {
+            System.out.print("Enter state (2 character abbreviation): ");
+            state = scanner.nextLine().trim().toUpperCase();
+            if (state.length() != 2) System.out.println("INVALID STATE. Please use the 2-letter format (e.g., MA).");
+        }
+
+        int zip = -1;
+        while (zip < 0) {
+            try {
+                System.out.print("Enter zip code: ");
+                zip = Integer.parseInt(scanner.nextLine());
+                if (zip < 0) System.out.println("Zip code cannot be negative.");
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number for zip code.");
+            }
+        }
+
+        System.out.print("Enter model name: ");
+        String model = scanner.nextLine();
+        String status = promptForStatus(scanner);
+
+        return new Home(sqft, addr, city, state, zip, model, status);
     }
 
     private static String promptForStatus(Scanner scanner) {
@@ -175,3 +205,4 @@ public class HomeInventory {
         }
     }
 }
+
