@@ -47,13 +47,13 @@ public class HomeInventory {
                     case "2" -> {
                         System.out.println("\n--- Removing Home ---");
                         if (inventory.isEmpty()) {
-                            System.out.println("Inventory is empty. Nothing to remove.");
+                            System.out.println("Inventory is empty. There is nothing to remove.");
                         } else {
                             System.out.print("Enter index to remove: ");
                             try {
                                 int idx = Integer.parseInt(scanner.nextLine());
                                 // CONFIRMATION FAILSAFE
-                                System.out.print("Are you sure you want to remove home [" + idx + "]? (Y/N): ");
+                                System.out.print("Are you sure you really want to remove home [" + idx + "]? (Y/N): ");
                                 if (scanner.nextLine().trim().equalsIgnoreCase("Y")) {
                                     System.out.println(removeHome(idx));
                                 } else {
