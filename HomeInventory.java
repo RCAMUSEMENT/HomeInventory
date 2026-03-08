@@ -6,8 +6,15 @@ import java.util.Scanner;
 
 /**
  * Student Name: Ryley Carlson
- * Part 2: Main HomeInventory Class
+ * CSC320 Module 8 Portfolio Assignment - Option #2
+ * Program: Home Inventory Management System
+ * Description: This program defines a Home class to represent individual homes with attributes such as
+ * square footage, address, city, state, zip code, model name, and sale status.
+ * The HomeInventory class manages a collection of Home objects, allowing users to add, remove, list, and update home information.
+ *  The program also includes functionality to print the inventory to a file and handles user interaction through the console.
+ *  All methods include try-catch blocks to ensure robust error handling and provide feedback on success or failure of operations.
  */
+
 public class HomeInventory {
     private static final ArrayList<Home> inventory = new ArrayList<>();
 
